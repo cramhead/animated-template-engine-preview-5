@@ -41,7 +41,7 @@ if (Meteor.isClient) {
             var removeAllCallback = function(err, result) {
                 if (err) {
                     console.log("Error removing all: " + err.message);
-                } 
+                }
             };
 
             var removeElement = function(elementId) {
@@ -50,22 +50,24 @@ if (Meteor.isClient) {
                 }, removeAllCallback);
 
             };
+
+            var queuedFn = function(next) {
+                // refers to the elements array
+                var el = elements.pop();
+                var id = $(el).data('id');
+
+                removeElement(id);
+
+                next(); // perform the next task in the queue
+            };
             var aniQ = $(this);
             var elements = $.find("li"); // get all the list items
             for (var i = elements.length - 1; i >= 0; i--) {
                 $element = $(elements[i]);
-                $element.addClass("shiftRight");
+                $element.addClass("identifyItemsToBeRemoved");
 
                 aniQ.delay(1000, 'remove')
-                    .queue('remove', function(next) {
-                        // refers to the elements array
-                        var el = elements.pop();
-                        var id = $(el).data('id');
-
-                        removeElement(id);
-
-                        next(); // perform the next task in the queue
-                    });
+                    .queue('remove', queuedFn);
 
             }
             // start the queue
