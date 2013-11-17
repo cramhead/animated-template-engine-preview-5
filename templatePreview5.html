@@ -1,0 +1,31 @@
+<head>
+    <title>templatePreview5</title>
+</head>
+
+<body>
+    <button class='btn btn-danger removeQuick'>Remove All</button>
+    {{>list}}
+</body>
+
+<template name="list">
+    <div class='container'>
+        <h1>My list</h1>
+        {{>addItem}}
+        <ul>
+            {{#each listItems}}
+            <li data-id={{_id}}>
+                <button class='btn btn-danger remove'>Remove</button>
+                {{itemValue}}
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</template>
+
+<template name="addItem">
+    <div class='form-inline'>
+        <input id="userInput" type="text" placeholder="please type in a new value">
+        <button class='btn btn-default add'>Add with class</button>
+        <button id='#addButton' class='btn btn-default'>Add with id</button>
+    </div>
+</template>
