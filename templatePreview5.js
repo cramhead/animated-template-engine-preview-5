@@ -31,8 +31,7 @@ if (Meteor.isClient) {
     });
 
     Template.addItem.events({
-        'click .add': addItem,
-        'click #addItem': addItem
+        'click .add': addItem
     });
 
     UI.body.events({
@@ -65,9 +64,11 @@ if (Meteor.isClient) {
             for (var i = elements.length - 1; i >= 0; i--) {
                 $element = $(elements[i]);
                 $element.addClass("identifyItemsToBeRemoved");
+                button = $element.find('button');
+                button.addClass('animatedButton');
 
-                aniQ.delay(1000, 'remove')
-                    .queue('remove', queuedFn);
+                // aniQ.delay(1000, 'remove')
+                //     .queue('remove', queuedFn);
 
             }
             // start the queue
