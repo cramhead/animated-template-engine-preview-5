@@ -25,8 +25,11 @@
 </template>
 
 <template name="addItem">
-    <div class='form-inline'>
-        <input id="userInput" type="text" placeholder="please type in a new value">
-        <button class='btn btn-default add'>Add</button>
-    </div>
+    <form id="form" data-validate="parsley">
+        <div class='form-inline'>
+         
+            <input id="userInput" type="text"  data-trigger="keyup" data-required="true" data-validation-minlength="0" data-multiple="3"  placeholder="please type in a new value">
+            <button class='btn btn-default add'>Add</button>
+        </div>
+    </form>
 </template>

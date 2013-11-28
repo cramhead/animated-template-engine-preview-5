@@ -3,6 +3,14 @@ items = new Meteor.Collection("items");
 if (Meteor.isClient) {
     var addItem = function(evt, tmpl) {
         evt.preventDefault();
+        $('#form').parsley('validate');
+
+        if ($('#form').parsley('isValid')) {
+            console.log('invalid');
+        } else {
+            console.log('valid');
+        }
+
         var inputText = tmpl.find('#userInput').value;
 
         var insertCallback = function(err, result) {
@@ -29,6 +37,31 @@ if (Meteor.isClient) {
             });
         }
     });
+
+    Template.addItem.rendered = function() {
+         $('#userInput').parsley({
+            successClass: 'success',
+            errorClass: 'error',
+            errors: {
+                classHandler: function(el) {
+                    return $(el).closest('.control-group');
+                },
+                errorsWrapper: '<span class=\"help-inline\"></span>',
+                errorElem: '<span></span>'
+            }
+        });
+        // var txtUserName = this.find('#userInput');
+        // $(txtUserName).parsley('addListener', {
+        //     onFieldValidate: function(element) {
+        //         console.log('validating');
+        //         element.addClass('parsley-error');
+        //         return false;
+        //     },
+        //     onFieldError: function(element) {
+        //         element.addClass('parsley-error');
+        //     }
+        // });
+    };
 
     Template.addItem.events({
         'click .add': addItem
@@ -67,8 +100,8 @@ if (Meteor.isClient) {
                 button = $element.find('button');
                 button.addClass('animatedButton');
 
-                // aniQ.delay(1000, 'remove')
-                //     .queue('remove', queuedFn);
+                aniQ.delay(1000, 'remove')
+                    .queue('remove', queuedFn);
 
             }
             // start the queue
